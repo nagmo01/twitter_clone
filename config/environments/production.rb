@@ -4,9 +4,18 @@ require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
-  
-
+  config.action_mailer.default_url_options = { host: 'https://hc-twitter-14d8e9cfa8c4.herokuapp.com' }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    port: 587,
+    address: 'smtp.gmail.com',
+    domain: 'gmail.com',
+    user_name: ENV['MAILER_USER_ID'],
+    password: ENV['MAILER_PASSWORD'],
+    authentication: :login,
+    enable_starttls_auto: true
+  }
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -67,6 +76,7 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "myapp_production"
+  config.action_mailer.perform_caching = false
 
 
   # Ignore bad email addresses and do not raise email delivery errors.
