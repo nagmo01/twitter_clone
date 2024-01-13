@@ -1,0 +1,15 @@
+.border-red {
+    border: 2px solid red;
+}
+.border-blue {
+    border: 2px solid blue;
+}
+.border-green {
+    border: 2px solid green;
+}
+.border-skyblue {
+    border: 2px solid skyblue;
+}
+.text-red {
+  color: red;
+}
