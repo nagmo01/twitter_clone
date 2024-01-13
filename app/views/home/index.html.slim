@@ -1,0 +1,11 @@
+h2.text-center トップページ
+br
+.container.text-center
+  div.text-center
+    = current_user.name if user_signed_in?
+  br
+  div.btn.btn-primary ツイートする
+  br
+  div
+    br
+    = link_to 'ログアウト', "/users/sign_out", class:"btn btn-primary"
