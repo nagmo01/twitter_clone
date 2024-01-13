@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myapp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+  <body>
+    <div>
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <%= link_to "sign_up", new_user_registration_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "sign_in", new_user_session_path, class:"nav-link" %>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <%= render 'layouts/flashes' %>
+    </div>
+    <div>
+      <%= yield %>
+    </div>
+  </body>
+</html>
