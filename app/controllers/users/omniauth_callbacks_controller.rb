@@ -26,7 +26,6 @@ module Users
       end
     end
 
-
     # You should also create an action method in this controller like this:
     # def twitter
     # end
