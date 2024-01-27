@@ -7,11 +7,11 @@ module Users
 
     def create
       super
-      #@user = User.find(current_user.id)
-      #unless @user.image.attached?
-        #@user.image.attach(io: File.open(Rails.root.join('app/assets/images/cart.jpg')), filename: 'cart.jpg')
-      #end
-      #@user.update!
+      # @user = User.find(current_user.id)
+      # unless @user.image.attached?
+      # @user.image.attach(io: File.open(Rails.root.join('app/assets/images/cart.jpg')), filename: 'cart.jpg')
+      # end
+      # @user.update!
 
       @users = User.all
     end
@@ -33,10 +33,9 @@ module Users
 
     def configure_account_update_params
       devise_parameter_sanitizer.permit(:account_update, keys: %i[name tel birthday avatar])
-      if account_update_params[:avatar].present?
-        resource.avatar.attach(account_update_params[:avatar])
-      end
+      return if account_update_params[:avatar].blank?
+
+      resource.avatar.attach(account_update_params[:avatar])
     end
-    
   end
 end
