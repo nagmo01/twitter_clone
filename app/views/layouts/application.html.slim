@@ -1,20 +1,24 @@
 doctype html
 html
   head
-    title Myapp
-    meta name="viewport" content="width=device-width,initial-scale=1"
+    title
+      | Myapp
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
-  body
-    div
-      ul.nav.justify-content-center
-        li.nav-item
-          = link_to "sign_up", new_user_registration_path, class:"nav-link"
-        li.nav-item
-          = link_to "sign_in", new_user_session_path, class:"nav-link"
+  body.border-6.mh-1000.bg-black.text-white
     div
       = render 'layouts/flashes'
-    div
+    .d-flex.justify-content-around.mx-auto.p-2.border-4
+      div
+        | 偽Twitter
+      div
+        - if user_signed_in?
+          = link_to "ログアウト", destroy_user_session_path, class:"btn btn-outline-danger"
+        - else
+          = link_to "ログイン", new_user_session_path, class:"btn btn-outline-primary"
+          = link_to "新規登録", new_user_registration_path, class:"btn btn-primary"
+    .border-4
       = yield
