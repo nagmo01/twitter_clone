@@ -1,15 +1,93 @@
 .border-red {
-    border: 2px solid red;
+  border: 1px solid red;
 }
 .border-blue {
-    border: 2px solid blue;
+  border: 1px solid blue;
 }
 .border-green {
-    border: 2px solid green;
+  border: 1px solid green;
 }
 .border-skyblue {
-    border: 2px solid skyblue;
+  border: 1px solid skyblue;
 }
 .text-red {
   color: red;
+}
+.border-1 {
+  border: 1px solid #FFC042;
+}
+.border-2 {
+  border: 1px solid #4DC0B2;
+}
+.border-3 {
+  border: 1px solid #61C359;
+}
+.border-4 {
+  border: 1px solid #767676;
+}
+.border-5 {
+  border: 1px solid #516C9D;
+}
+.border-6 {
+  border: 1px solid #AAA5D1;
+}
+.border-7 {
+  border: 1px solid #665990;
+}
+
+.tab01 {
+  width: 100%;
+  margin: 0 auto 30px;
+}
+/*タブのスタイル*/
+.tab_menu {
+  width: calc(100%/2);
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  text-align: center;
+  color: #000;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_menu:hover {
+  opacity: 0.75;
+}
+/*ラジオボタンを全て消す*/
+input[name="tab_menu"] {
+  display: none;
+}
+/*タブ切り替えの中身のスタイル*/
+.tab_contents {
+  display: none;
+  padding: 40px;
+  clear: both;
+  overflow: hidden;
+  transition: .5s opacity;
+  box-shadow: 0 0 3px rgba(0,0,0,.2);
+}
+/*選択されているタブを表示*/
+#menu01:checked ~ #menu01,
+#menu02:checked ~ #menu02
+{
+  display: block;
+}
+/*選択されているタブのスタイル*/
+.tab01 input:checked + .tab_menu {
+  border-bottom: 6px solid rgb(2, 80, 196);
+  color: #fff;
+}
+
+.bg-black {
+  background-color: #000000;
+}
+
+.avatar {
+  border-radius: 50%;
+    width: 60px;
+    height: 60px;
+  object-fit:cover;
 }
