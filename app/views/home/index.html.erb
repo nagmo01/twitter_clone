@@ -1,0 +1,142 @@
+<div class="container text-center">
+  <div class="row">
+    <div class="col-4 d-flex flex-column mb-3 border-4">
+
+      <div class="p-3">ホーム</div>
+      <div class="p-3">話題を検索</div>
+      <div class="p-3">メッセージ</div>
+      <div class="p-3">ブックマーク</div>
+      <div class="p-3">Twitter Blue</div>
+      <div class="p-3">プロフィール</div>
+      <div class="p-3">もっと見る</div>
+      <div class="p-3"><%= link_to "ツイートする", new_tweet_path, class:"btn btn-primary"  %></div>
+    </div>
+
+
+    <div class="col-8 border-4">
+
+
+      <div class="tab01">
+        <input id="menu01" type="radio" name="tab_menu" checked><label class="tab_menu" for="menu01">おすすめ</label>
+        <input id="menu02" type="radio" name="tab_menu"><label class="tab_menu" for="menu02">フォロー中</label>
+        <div class="border-5">
+          <%= form_with url: "/tweet/#{current_user.id}", class:"border-4"  do |form| %>
+
+            <%= form.text_area :content, class:"p-3 w-100 bg-black" %>
+            <div class="border-4">
+              <%= form.label :images, class: "btn btn-secondary" do %>
+                画像を選択
+                <%= form.file_field :images, :multiple => true, class:"d-none" %>
+              <% end %>
+              <%= form.submit 'ツイートする', class:"btn btn-primary" %>
+            </div>
+
+          <% end %>
+        </div>
+
+        <div class="tab_contents border-4 p-1 w-100" id="menu01">
+          <div class="border-4 w-100 bg-primary">
+            全てのユーザーのツイートが表示される
+          </div>
+          <% @tweets.each do |tweet| %>
+            <div class="w-100">
+              <div class="d-flex">
+                <%= image_tag tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar" if tweet.user.avatar.attached? %>
+                <p class="fw-bolder fs-6"><%= tweet.user.name %></p>
+                <p class="fw-bolder fs-6">@USER_ID</p>
+              </div>
+              <div><%= tweet.content %></div>
+
+
+
+              <div class="d-flex">
+
+                <% if tweet.images.attached? %>
+                  <% case tweet.images.size %>
+                  <% when 1 then %>
+                    <% tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                    <% end %>
+                  <% when 2 then %>
+                    <% tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                    <% end %>
+                  <% when 3 then %>
+                    <div class="mx-auto">
+                      <% tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                      <% end %>
+                    </div>
+                  <% when 4 then %>
+                    <% tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                    <% end %>
+
+                  <% end %>
+
+
+                <% end %>
+
+              </div>
+            </div>
+          <% end %>
+          <%= paginate @tweets, theme: 'bootstrap-5' %>
+
+        </div>
+        <div class="tab_contents border-4 p-1 w-100" id="menu02">
+          <div class="border-4 w-100 bg-primary">
+            本当はフォロー中のユーザーのツイートが表示される
+          </div>
+          <% @tweets.each do |tweet| %>
+            <div class="w-100">
+              <div class="d-flex">
+                <%= image_tag tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar" if tweet.user.avatar.attached? %>
+                <p class="fw-bolder fs-6"><%= tweet.user.name %></p>
+                <p class="fw-bolder fs-6"> @USER_ID </p>
+              </div>
+              <div><%= tweet.content %></div>
+
+
+
+              <div class="d-flex">
+
+                <% if tweet.images.attached? %>
+                  <% case tweet.images.size %>
+                  <% when 1 then %>
+                    <% tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                    <% end %>
+                  <% when 2 then %>
+                    <% tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                    <% end %>
+                  <% when 3 then %>
+                    <div class="mx-auto">
+                      <% tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                      <% end %>
+                    </div>
+                  <% when 4 then %>
+                    <% tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                    <% end %>
+
+                  <% end %>
+
+
+                <% end %>
+
+              </div>
+            </div>
+          <% end %>
+          <%= paginate @tweets, theme: 'bootstrap-5' %>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>

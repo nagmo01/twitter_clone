@@ -13,6 +13,9 @@ class User < ApplicationRecord
   validates :tel, presence: true, unless: -> { uid.present? }
   validates :birthday, presence: true, unless: -> { uid.present? }
 
+  has_one_attached :avatar
+  has_many :tweets, dependent: :destroy
+
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first
 
@@ -23,6 +26,8 @@ class User < ApplicationRecord
       email: auth.info.email,
       password: Devise.friendly_token[0, 20]
     )
+
+    user.skip_confirmation!
 
     user
   end
