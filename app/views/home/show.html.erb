@@ -45,29 +45,30 @@
                   <% if tweet.images.attached? %>
                     <% case tweet.images.size %>
                     <% when 1 then %>
-                    <% tweet.images.each do |image| %>
-                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
-                    <% end %>
+                      <% tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                      <% end %>
                     <% when 2 then %>
-                    <% tweet.images.each do |image| %>
-                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
-                    <% end %>
+                      <% tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                      <% end %>
                     <% when 3 then %>
-                    <div class="mx-auto">
+                      <div class="mx-auto">
+                        <% tweet.images.each do |image| %>
+                          <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                        <% end %>
+                      </div>
+                    <% when 4 then %>
                       <% tweet.images.each do |image| %>
                         <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
                       <% end %>
-                    </div>
-                    <% when 4 then %>
-                    <% tweet.images.each do |image| %>
-                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
                     <% end %>
                   <% end %>
-                <% end %>
+                </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+
         <%= paginate @tweets, theme: 'bootstrap-5' %>
       </div>
       <div class="tab_contents border-4 p-1 w-100" id="menu02">
