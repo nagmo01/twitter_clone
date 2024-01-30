@@ -85,6 +85,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+gem 'aws-sdk-s3'
 gem 'bootstrap5-kaminari-views'
 gem 'devise'
 gem 'devise-i18n'
@@ -96,4 +97,3 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'slim'
 gem 'slim-rails'
-gem 'aws-sdk-s3'
