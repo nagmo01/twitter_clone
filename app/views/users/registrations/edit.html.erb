@@ -1,0 +1,66 @@
+<h2 class="text-center mt-5 mb-5">アカウント情報を編集</h2>
+<div class="container">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "users/shared/error_messages", resource: resource %>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :username %><br />
+      <%= f.text_field :username, class:"form-control", autofocus: true, autocomplete: "username" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :userid %><br />
+      <%= f.text_field :userid, class:"form-control", autofocus: true, autocomplete: "userid" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :description %><br />
+      <%= f.text_area :description, class:"form-control", autofocus: true, autocomplete: "description" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :tel %><br />
+      <%= f.text_field :tel, class:"form-control", autofocus: true, autocomplete: "tel" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :place %><br />
+      <%= f.text_field :place, class:"form-control", autofocus: true, autocomplete: "place" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :website %><br />
+      <%= f.text_field :website, class:"form-control", autofocus: true, autocomplete: "website" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :birthday %><br />
+      <%= f.text_field :birthday, class:"form-control", autofocus: true, autocomplete: "birthday" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+      <%= f.password_field :password, class:"form-control", autocomplete: "new-password" %>
+      <% if @minimum_password_length %>
+        <br />
+        <em>英数字含む<%= @minimum_password_length %>文字以上</em>
+      <% end %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, class:"form-control", autocomplete: "new-password" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :avatar %><br />
+      <%= f.file_field :avatar, class:"form-control" %>
+    </div>
+    <div class="form-group col-md-6 mx-auto mb-4">
+      <%= f.label :header_image %><br />
+      <%= f.file_field :header_image, class:"form-control" %>
+    </div>
+    <div class="actions mt-5 col-md-6 mx-auto text-center">
+      <%= f.submit "Update", class:"btn btn-primary text-center" %>
+    </div>
+  <% end %>
+</div>
+<div class="container text-center mt-4 mb-5">
+  <h3 class="mb-3 mt-5">Cancel my account</h3>
+  <div><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class:"btn btn-dark mb-3" %></div>
+  <%= link_to "Back", :back, class:"link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" %>
+</div>
