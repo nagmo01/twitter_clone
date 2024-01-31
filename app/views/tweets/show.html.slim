@@ -1,0 +1,69 @@
+.container-fluid.text-center
+  .row
+    .col-4.d-flex.flex-column.mb-3.border-4
+      .p-3
+        = link_to "ホーム", root_path, class:"decoration-none"
+      .p-3
+        | 話題を検索
+      .p-3
+        | メッセージ
+      .p-3
+        | ブックマーク
+      .p-3
+        | Twitter Blue
+      .p-3
+        = link_to "プロフィール", home_path(current_user), class:"decoration-none"
+      .p-3
+        | もっと見る
+      .p-3
+        = link_to "ツイートする", new_tweet_path, class:"btn btn-primary"
+    .col-8.border-4
+      .border-under.mt-3.pb-5
+        .d-flex.mb-3
+          = image_tag @tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar col-2 margin-right-1" if @tweet.user.avatar.attached?
+          .text-start.mt-2
+            .fw-bolder.fs-5
+              = @tweet.user.username
+            .fs-6.color-gray
+              | @
+              = @tweet.user.userid
+        .fw-bolder.fs-3.text-start.font-size-text.mb-4
+          = @tweet.content
+        .d-flex
+          - if @tweet.images.attached?
+            - case @tweet.images.size
+
+            - when 1 then
+              - @tweet.images.each do |image|
+                = image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100"
+            - when 2 then
+              - @tweet.images.each do |image|
+                = image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50"
+            - when 3 then
+              .mx-auto
+                - @tweet.images.each do |image|
+                  = image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25"
+            - when 4 then
+              - @tweet.images.each do |image|
+                = image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25"
+      = form_with url: "/reply/#{@tweet.id}", class:"d-flex w-100 mt-3 mb-3"  do |form|
+        = form.text_area :content, class:"w-75"
+        = form.submit 'コメントする', class:"btn btn-primary w-25"
+      - @replies.each do |reply|
+        .d-flex.border-under
+          = image_tag reply.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar d-flex col-2 margin-right-1" if reply.user.avatar.attached?
+          div
+            .d-flex.flex-column
+              .fw-bolder.fs-6.text-start.decoration-none
+                a
+                  = reply.user.username
+                a.color-gray.decoration-none
+                  | @
+                  = reply.user.userid
+              .text-start
+                a.color-blue.decoration-none
+                  | @
+                  = @tweet.user.userid
+              .text-start.font-size-text.mt-2.mb-2
+                = reply.content
+      = paginate @replies, theme: 'bootstrap-5'

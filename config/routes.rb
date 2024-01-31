@@ -12,11 +12,13 @@ Rails.application.routes.draw do
 
   # get '/home/:id' => 'homes#show'
   post '/tweet/:id' => 'tweets#create'
+  post '/reply/:id' => 'replies#create'
   get '/tweet' => 'tweets#new'
+  get '/tweet/:id' => 'tweets#show'
   post '/favorite/:id' => 'favorites#create'
 
   resources :home, only: %i[index show]
-  resources :tweets, only: %i[create new destroy]
+  resources :tweets, only: %i[create new destroy show]
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end

@@ -21,5 +21,10 @@ class TweetsController < ApplicationController
     end
   end
 
+  def show
+    @tweet = Tweet.find(params[:id])
+    @replies = Reply.where(tweet_id: params[:id]).order(created_at: :asc).page(params[:page])
+  end
+
   def destroy; end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class Tweet < ApplicationRecord
-  has_many_attached :images
+class Reply < ApplicationRecord
   belongs_to :user
-  has_many :replies, dependent: :destroy
+  belongs_to :tweet
   validates :content, presence: true, length: { maximum: 140 }
+  has_many_attached :reply_images
 end
