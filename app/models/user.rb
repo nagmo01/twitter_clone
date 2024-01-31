@@ -9,10 +9,11 @@ class User < ApplicationRecord
          :confirmable,
          :omniauthable, omniauth_providers: [:github]
 
-  validates :name, presence: true
+  validates :userid, presence: true
   validates :tel, presence: true, unless: -> { uid.present? }
   validates :birthday, presence: true, unless: -> { uid.present? }
 
+  has_one_attached :header_image
   has_one_attached :avatar
   has_many :tweets, dependent: :destroy
 
@@ -22,7 +23,8 @@ class User < ApplicationRecord
     user ||= User.create!(
       provider: auth.provider,
       uid: auth.uid,
-      name: auth.info.name,
+      username: auth.info.name,
+      userid: auth.info.nickname,
       email: auth.info.email,
       password: Devise.friendly_token[0, 20]
     )

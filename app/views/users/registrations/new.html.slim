@@ -5,9 +5,9 @@ br
   = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :post }, data: { turbo: false }) do |f|
     = render "users/shared/error_messages", resource: resource
     .form-group.col-md-6.mx-auto
-      = f.label :name
+      = f.label :username
       br
-      = f.text_field :name, class:"form-control", autofocus: true, autocomplete: "name"
+      = f.text_field :username, class:"form-control", autofocus: true, autocomplete: "username"
     | </br /> 
     .form-group.col-md-6.mx-auto
       = f.label :email

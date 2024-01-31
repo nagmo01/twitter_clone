@@ -28,14 +28,20 @@ module Users
     end
 
     def configure_sign_up_params
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[name tel birthday])
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[userid tel birthday])
     end
 
     def configure_account_update_params
-      devise_parameter_sanitizer.permit(:account_update, keys: %i[name tel birthday avatar])
+      devise_parameter_sanitizer.permit(:account_update,
+                                        keys: %i[userid tel birthday username avatar header_image place website
+                                                 description])
       return if account_update_params[:avatar].blank?
 
       resource.avatar.attach(account_update_params[:avatar])
+
+      return if account_update_params[:header_image].blank?
+
+      resource.avatar.attach(account_update_params[:header_image])
     end
   end
 end

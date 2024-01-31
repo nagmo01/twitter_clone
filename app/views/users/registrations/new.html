@@ -5,8 +5,13 @@
     <%= render "users/shared/error_messages", resource: resource %>
 
     <div class="form-group col-md-6 mx-auto">
-      <%= f.label :name %><br />
-      <%= f.text_field :name, class:"form-control", autofocus: true, autocomplete: "name" %>
+      <%= f.label :userid %><br />
+      <%= f.text_field :userid, class:"form-control", autofocus: true, autocomplete: "userid" %>
+    </div></br />
+
+    <div class="form-group col-md-6 mx-auto">
+      <%= f.label :username %><br />
+      <%= f.text_field :username, class:"form-control", autofocus: true, autocomplete: "username" %>
     </div></br />
 
     <div class="form-group col-md-6 mx-auto">
@@ -15,12 +20,12 @@
     </div><br />
 
     <div class="form-group col-md-6 mx-auto">
-      <%= f.label :tel %><br />
+      <%= f.label "tel(例: 08012341234)" %><br />
       <%= f.telephone_field :tel, class:"form-control", autofocus: true, autocomplete: "tel" %>
     </div><br />
 
     <div class="form-group col-md-6 mx-auto">
-      <%= f.label :birthday %><br />
+      <%= f.label "生年月日(例:2000年1月1日→ 20000101)" %><br />
       <%= f.text_field :birthday, class:"form-control", autofocus: true, autocomplete: "birthday" %>
     </div><br />
 
@@ -43,5 +48,3 @@
     </div><br />
   <% end %>
 </div>
-
-
