@@ -116,3 +116,7 @@ input[name="tab_menu"] {
 .font-size-text {
   font-size: 14px;
 }
+
+.container-fluid {
+  max-width: 1200px;
+}
