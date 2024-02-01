@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :tweets, dependent: :destroy
   has_many :replies, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first

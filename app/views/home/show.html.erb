@@ -67,13 +67,81 @@
                   <% end %>
                 </div>
               <% end %>
+              <div class="d-flex">
+                <div>返信</div>
+                <div>RT</div>
+                <% unless tweet.favorites.where(user_id: current_user.id).first %>
+                  <%= link_to "/favorite/#{tweet.id}", data: { turbo_method: :post } do %>
+                    <i class="bi bi-heart"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to "/favorite/#{tweet.id}", data: { turbo_method: :post } do %>
+                    <i class="bi bi-heart-fill color-pink"></i>
+                  <% end %>
+                <% end %>
+                <div class="ps-1"><%= tweet.favorites.size %></div>
+              </div>
             </div>
           </div>
         <% end %>
         <%= paginate @tweets, theme: 'bootstrap-5' %>
       </div>
       <div class="tab_contents border-4 p-1 w-100" id="menu02">
-      </div>
+        <div class="border-4 w-100 bg-primary">
+          いいねしたツイート一覧が表示される
+        </div>
+        <% @favorites.each do |favorite| %>
+          <div class="d-flex border-under">
+            <%= image_tag favorite.tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar d-flex col-2 margin-right-1" if favorite.tweet.user.avatar.attached? %>
+            <div>
+              <%= link_to "/tweet/#{favorite.tweet.id}", class:"decoration-none color-white" do %>
+                <div class="d-flex flex-column">
+                  <div class="fw-bolder fs-6 text-start"><%= favorite.tweet.user.username %></div>
+                  <div class="text-start font-size-text"><%= favorite.tweet.content %></div>
+                </div>
+                <div class="d-flex">
+                  <% if favorite.tweet.images.attached? %>
+                    <% case favorite.tweet.images.size %>
+                    <% when 1 then %>
+                    <% favorite.tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                    <% end %>
+                    <% when 2 then %>
+                    <% favorite.tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                    <% end %>
+                    <% when 3 then %>
+                    <div class="mx-auto">
+                      <% favorite.tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                      <% end %>
+                    </div>
+                    <% when 4 then %>
+                    <% favorite.tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="d-flex">
+              <div>返信</div>
+              <div>RT</div>
+              <% unless favorite.tweet.favorites.where(user_id: current_user.id).first %>
+                <%= link_to "/favorite/#{favorite.tweet.id}", data: { turbo_method: :post } do %>
+                  <i class="bi bi-heart"></i>
+                <% end %>
+              <% else %>
+                <%= link_to "/favorite/#{favorite.tweet.id}", data: { turbo_method: :post } do %>
+                  <i class="bi bi-heart-fill color-pink"></i>
+                <% end %>
+              <% end %>
+              <div class="ps-1"><%= favorite.tweet.favorites.size %></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
+</div>
 </div>

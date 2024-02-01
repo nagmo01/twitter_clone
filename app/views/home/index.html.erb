@@ -44,72 +44,86 @@
                     <% if tweet.images.attached? %>
                       <% case tweet.images.size %>
                       <% when 1 then %>
-                        <% tweet.images.each do |image| %>
-                          <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
-                        <% end %>
+                      <% tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                      <% end %>
                       <% when 2 then %>
-                        <% tweet.images.each do |image| %>
-                          <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
-                        <% end %>
+                      <% tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                      <% end %>
                       <% when 3 then %>
-                        <div class="mx-auto">
-                          <% tweet.images.each do |image| %>
-                            <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
-                          <% end %>
-                        </div>
-                      <% when 4 then %>
+                      <div class="mx-auto">
                         <% tweet.images.each do |image| %>
                           <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
                         <% end %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-          <%= paginate @tweets, theme: 'bootstrap-5' %>
-        </div>
-        <div class="tab_contents border-4 p-1 w-100" id="menu02">
-          <div class="border-4 w-100 bg-primary">
-            全てのユーザーのツイートが表示される
-          </div>
-          <% @tweets.each do |tweet| %>
-            <div class="w-100">
-              <div class="d-flex">
-                <%= image_tag tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar" if tweet.user.avatar.attached? %>
-                <p class="fw-bolder fs-6"><%= tweet.user.username %></p>
-              </div>
-              <div><%= tweet.content %></div>
-              <div class="d-flex">
-                <% if tweet.images.attached? %>
-                  <% case tweet.images.size %>
-                  <% when 1 then %>
-                    <% tweet.images.each do |image| %>
-                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
-                    <% end %>
-                  <% when 2 then %>
-                    <% tweet.images.each do |image| %>
-                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
-                    <% end %>
-                  <% when 3 then %>
-                    <div class="mx-auto">
+                      </div>
+                      <% when 4 then %>
                       <% tweet.images.each do |image| %>
                         <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
                       <% end %>
-                    </div>
-                  <% when 4 then %>
-                    <% tweet.images.each do |image| %>
-                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
                     <% end %>
                   <% end %>
+                </div>
+              <% end %>
+              <div class="d-flex">
+                <div>返信</div>
+                <div>RT</div>
+                <% unless tweet.favorites.where(user_id: current_user.id).first %>
+                  <%= link_to "/favorite/#{tweet.id}", data: { turbo_method: :post } do %>
+                    <i class="bi bi-heart"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to "/favorite/#{tweet.id}", data: { turbo_method: :post } do %>
+                    <i class="bi bi-heart-fill color-pink"></i>
+                  <% end %>
+                <% end %>
+                <div class="ps-1"><%= tweet.favorites.size %></div>
               </div>
-            <% end %>
+            </div>
+          </div>
+        <% end %>
+        <%= paginate @tweets, theme: 'bootstrap-5' %>
+      </div>
+      <div class="tab_contents border-4 p-1 w-100" id="menu02">
+        <div class="border-4 w-100 bg-primary">
+          全てのユーザーのツイートが表示される
+        </div>
+        <% @tweets.each do |tweet| %>
+          <div class="w-100">
+            <div class="d-flex">
+              <%= image_tag tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar" if tweet.user.avatar.attached? %>
+              <p class="fw-bolder fs-6"><%= tweet.user.username %></p>
+            </div>
+            <div><%= tweet.content %></div>
+            <div class="d-flex">
+              <% if tweet.images.attached? %>
+                <% case tweet.images.size %>
+                <% when 1 then %>
+                <% tweet.images.each do |image| %>
+                  <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                <% end %>
+                <% when 2 then %>
+                <% tweet.images.each do |image| %>
+                  <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                <% end %>
+                <% when 3 then %>
+                <div class="mx-auto">
+                  <% tweet.images.each do |image| %>
+                    <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                  <% end %>
+                </div>
+                <% when 4 then %>
+                <% tweet.images.each do |image| %>
+                  <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                <% end %>
+              <% end %>
             </div>
           <% end %>
-          <%= paginate @tweets, theme: 'bootstrap-5' %>
         </div>
-      </div>
+      <% end %>
+      <%= paginate @tweets, theme: 'bootstrap-5' %>
     </div>
   </div>
+</div>
+</div>
 </div>
