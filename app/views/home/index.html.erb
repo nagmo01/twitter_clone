@@ -69,11 +69,11 @@
                 <div>返信</div>
                 <div>RT</div>
                 <% unless tweet.favorites.where(user_id: current_user.id).first %>
-                  <%= link_to "/favorite/#{tweet.id}", data: { turbo_method: :post } do %>
+                  <%= link_to favorites_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
                     <i class="bi bi-heart"></i>
                   <% end %>
                 <% else %>
-                  <%= link_to "/favorite/#{tweet.id}", data: { turbo_method: :post } do %>
+                  <%= link_to favorites_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
                     <i class="bi bi-heart-fill color-pink"></i>
                   <% end %>
                 <% end %>

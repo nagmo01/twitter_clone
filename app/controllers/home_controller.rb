@@ -10,7 +10,7 @@ class HomeController < ApplicationController
 
   def show
     @user = User.find(current_user.id)
-    @tweets = Tweet.where(user_id: current_user.id).order(created_at: :desc).page(params[:page])
-    @favorites = Favorite.where(user_id: current_user.id)
+    @tweets = @user.tweets.order(created_at: :desc).page(params[:page])
+    @favorites = @user.favorites
   end
 end

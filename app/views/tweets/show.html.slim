@@ -52,10 +52,10 @@
           div
             | RT
           - unless @tweet.favorites.where(user_id: current_user.id).first
-            = link_to "/favorite/#{@tweet.id}", data: { turbo_method: :post } do
+            = link_to favorites_path(params: { id: @tweet.id}), data: { turbo_method: :post } do
               i.bi.bi-heart
           - else
-            = link_to "/favorite/#{@tweet.id}", data: { turbo_method: :post } do
+            = link_to favorites_path(params: { id: @tweet.id}), data: { turbo_method: :post } do
               i.bi.bi-heart-fill.color-pink
           .ps-1
             = @tweet.favorites.size
@@ -65,18 +65,20 @@
       - @replies.each do |reply|
         .d-flex.border-under
           = image_tag reply.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar d-flex col-2 margin-right-1" if reply.user.avatar.attached?
-          div
-            .d-flex.flex-column
-              .fw-bolder.fs-6.text-start.decoration-none
-                a
-                  = reply.user.username
-                a.color-gray.decoration-none
-                  | @
-                  = reply.user.userid
-              .text-start
-                a.color-blue.decoration-none
-                  | @
-                  = @tweet.user.userid
-              .text-start.font-size-text.mt-2.mb-2
-                = reply.content
-      = paginate @replies, theme: 'bootstrap-5'
+        div
+
+        .d-flex.flex-column
+
+        .fw-bolder.fs-6.text-start.decoration-none
+          a
+            = reply.user.username
+          a.color-gray.decoration-none
+            | @
+            = reply.user.userid
+        .text-start
+          a.color-blue.decoration-none
+            | @
+            = @tweet.user.userid
+        .text-start.font-size-text.mt-2.mb-2
+          = reply.content
+= paginate @replies, theme: 'bootstrap-5'
