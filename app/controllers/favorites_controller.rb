@@ -2,13 +2,11 @@
 
 class FavoritesController < ApplicationController
   def create
-    @favorite = Favorite.where(tweet_id: params[:id], user_id: current_user.id).first
+    @favorite = Favorite.find_by(tweet_id: params[:id], user_id: current_user.id)
     if @favorite
       @favorite.destroy
     else
-      @favorite = Favorite.new
-      @favorite.user_id = current_user.id
-      @favorite.tweet_id = params[:id]
+      @favorite = current_user.favorites.build(tweet_id: params[:id])
       @favorite.save!
     end
     redirect_back(fallback_location: root_path)

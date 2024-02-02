@@ -3,9 +3,7 @@
 class RepliesController < ApplicationController
   def create
     @reply = Reply.new
-    @reply.tweet_id = params[:id]
-    @reply.content = params[:content]
-    @reply.user_id = current_user.id
+    @reply = current_user.replies.build(tweet_id: params[:id], content: params[:content])
 
     if @reply.save
       redirect_to "/tweet/#{params[:id]}", notice: 'ツイートが成功しました。'

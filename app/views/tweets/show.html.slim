@@ -65,20 +65,18 @@
       - @replies.each do |reply|
         .d-flex.border-under
           = image_tag reply.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar d-flex col-2 margin-right-1" if reply.user.avatar.attached?
-        div
-
-        .d-flex.flex-column
-
-        .fw-bolder.fs-6.text-start.decoration-none
-          a
-            = reply.user.username
-          a.color-gray.decoration-none
-            | @
-            = reply.user.userid
-        .text-start
-          a.color-blue.decoration-none
-            | @
-            = @tweet.user.userid
-        .text-start.font-size-text.mt-2.mb-2
-          = reply.content
-= paginate @replies, theme: 'bootstrap-5'
+          div
+            .d-flex.flex-column
+              .fw-bolder.fs-6.text-start.decoration-none
+                a
+                  = reply.user.username
+                a.color-gray.decoration-none
+                  | @
+                  = reply.user.userid
+              .text-start
+                a.color-blue.decoration-none
+                  | @
+                  = @tweet.user.userid
+              .text-start.font-size-text.mt-2.mb-2
+                = reply.content
+      = paginate @replies, theme: 'bootstrap-5'
