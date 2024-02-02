@@ -5,7 +5,7 @@
         <div class="p-3"><i class="bi bi-house"></i> ホーム</div>
         <div class="p-3"><i class="bi bi-bell"></i> 通知</div>
         <div class="p-3"><i class="bi bi-envelope"></i> メッセージ</div>
-        <div class="p-3"><i class="bi bi-bookmark"></i> ブックマーク</div>
+        <div class="p-3"><i class="bi bi-bookmark"></i> <%= link_to "ブックマーク", bookmarks_path %></div>
         <div class="p-3"><i class="bi bi-person-square"></i> <%= link_to "プロフィール", home_path(current_user), class:"decoration-none" %></div>
         <div class="p-3">もっと見る</div>
         <div class="p-3"><%= link_to "ツイートする", new_tweet_path, class:"btn btn-primary"  %></div>
@@ -78,6 +78,17 @@
                   <% end %>
                 <% end %>
                 <div class="ps-1"><%= tweet.favorites.size %></div>
+                <div>ブックマーク</div>
+                <% unless tweet.bookmarks.find_by(user_id: current_user.id) %>
+                  <%= link_to bookmarks_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
+                    <i class="bi bi-bookmark"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to bookmarks_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
+                    <i class="bi bi-bookmark-fill"></i>
+                  <% end %>
+                <% end %>
+                <div class="ps-1"><%= tweet.bookmarks.size %></div>
               </div>
             </div>
           </div>

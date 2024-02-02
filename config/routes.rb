@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :home, only: %i[index show]
   resources :tweets, only: %i[create new destroy show]
   resources :favorites, only: :create
+  resources :bookmarks, only: %i[index create]
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
