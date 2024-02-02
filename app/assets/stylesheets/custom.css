@@ -116,3 +116,23 @@ input[name="tab_menu"] {
 .font-size-text {
   font-size: 14px;
 }
+
+.container-fluid {
+  max-width: 1200px;
+}
+.decoration-none {
+  text-decoration: none;
+}
+.color-white {
+  color: #000000;
+}
+.color-white:hover {
+  color: #000000;
+}
+.color-blue {
+  color: blue;
+}
+.color-gray {
+  color: darkgray;
+  opacity: 0.7;
+}
