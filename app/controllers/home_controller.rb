@@ -11,6 +11,7 @@ class HomeController < ApplicationController
   def show
     @user = User.find(current_user.id)
     @tweets = @user.tweets.order(created_at: :desc).page(params[:page])
-    @favorites = @user.favorites
+    @favorites = @user.favorites.order(created_at: :desc).page(params[:page])
+    @retweets = @user.retweets.order(created_at: :desc).page(params[:page])
   end
 end
