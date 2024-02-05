@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RepliesController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     @reply = Reply.new
     @reply = current_user.replies.build(tweet_id: params[:id], content: params[:content])
