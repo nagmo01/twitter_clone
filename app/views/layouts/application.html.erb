@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myapp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+  <body class="border-6 mh-1000 bg-black text-white">
+    <div>
+      <%= render 'layouts/flashes' %>
+    </div>
+    <div class="d-flex justify-content-around mx-auto p-2 border-4">
+      <div><i class="bi bi-twitter"></i> 偽Twitter</div>
+      <div>
+        <% if user_signed_in? %>
+          <%= link_to "home", root_path, class:"btn btn-dark" %>
+          <%= link_to "ログアウト", destroy_user_session_path, class:"btn btn-outline-danger" %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, class:"btn btn-outline-primary" %>
+          <%= link_to "新規登録", new_user_registration_path, class:"btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="border-4">
+      <%= yield %>
+    </div>
+  </body>
+</html>
