@@ -147,3 +147,39 @@
   display: none;
 }
 
+
+.max-width-70 {
+  max-width: 70%;
+}
+
+.box-radius-right {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 15px;
+}
+
+.box-radius-left {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 3px;
+}
+.bg-dm-right {
+  background-color: #0C72B7;
+}
+.bg-dm-left {
+  background-color: #26292B;
+}
+
+.max-width-700{
+  max-width: 700px;
+}
+.border-bottom-blue {
+  border-bottom: 3px solid #0250c4;
+}
+.no-wrap {
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+}

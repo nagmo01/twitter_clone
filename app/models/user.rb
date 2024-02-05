@@ -20,6 +20,9 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :retweets, dependent: :destroy
+  has_many :sent_messages, foreign_key: 'sender_id', class_name: 'Message', inverse_of: 'sender', dependent: :destroy
+  has_many :received_messages, foreign_key: 'receiver_id', class_name: 'Message', inverse_of: 'receiver',
+                               dependent: :destroy
 
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first
