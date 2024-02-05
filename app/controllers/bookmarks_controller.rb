@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class BookmarksController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @bookmarks = current_user.bookmarks
   end
 
   def create
-    @bookmark = Bookmark.find_by(tweet_id: params[:id], user_id: current_user.id)
+    @bookmark = current_user.bookmarks.find_by(tweet_id: params[:id])
     if @bookmark
       @bookmark.destroy
     else

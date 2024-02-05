@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class RetweetsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
-    @retweet = Retweet.find_by(tweet_id: params[:id], user_id: current_user.id)
+    @retweet = current_user.retweets.find_by(tweet_id: params[:id])
     if @retweet
       @retweet.destroy
     else
