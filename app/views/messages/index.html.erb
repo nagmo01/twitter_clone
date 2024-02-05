@@ -39,7 +39,7 @@
             <%= link_to message_path(message.sender.id), class:"decoration-none color-white" do %>
               <div class="d=flex flex-column">
                 <div class="fw-bolder fs-6 text-start decoration-none"><%= message.sender.username %></div>
-                <div class="text-start font-size-text no-wrap"><%= message.sender.sent_messages.where(receiver_id: current_user.id ).last.content %></div>
+                <div class="text-start font-size-text no-wrap"><%= message.sender.sent_messages.where(receiver_id: message.receiver.id ).last.content %></div>
               </div>
             <% end %>
           </div>
