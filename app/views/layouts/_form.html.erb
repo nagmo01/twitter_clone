@@ -1,0 +1,10 @@
+<%= form_with url: "/tweet/#{current_user.id}", class:"border-4"  do |form| %>
+  <%= form.text_area :content, class:"p-3 w-100 bg-black" %>
+  <div class="border-4">
+    <%= form.label :images, class: "btn btn-secondary" do %>
+      画像を選択
+      <%= form.file_field :images, :multiple => true, class:"d-none" %>
+    <% end %>
+    <%= form.submit 'ツイートする', class:"btn btn-primary" %>
+  </div>
+<% end %>

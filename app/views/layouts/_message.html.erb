@@ -1,0 +1,30 @@
+<div class="text-center">
+  <div class="fs-bolder fs-4 text-start ps-5">
+    <%= image_tag @receiver.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar margin-right-1" if @receiver.avatar.attached? %>
+    <%= @receiver.username %>
+  </div>
+</div>
+<div class="w-100 bg-primary text-center">
+  ここに今までのやりとりが表示される
+</div>
+<% @messages.each do |message| %>
+  <% if message.sender == current_user %>
+    <div class="p-3 text-end w-100">
+      <div class="ps-3 pe-3 pt-2 pb-2 text-start d-inline-flex box-radius-right max-width-70 bg-dm-right">
+        <%= message.content %>
+      </div>
+    </div>
+  <% else %>
+    <div class="p-3 text-start w-100">
+      <div class="ps-3 pe-3 pt-2 pb-2 d-inline-flex box-radius-left max-width-70 bg-dm-left">
+        <%= message.content %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<%= form_with url:messages_path(params: { id: @receiver.id }), class:"border-4"  do |form| %>
+  <%= form.text_area :content, class:"p-3 w-100 bg-black" %>
+  <div class="d-flex">
+    <%= form.submit '送信する', class:"btn btn-primary mx-auto" %>
+  </div>
+<% end %>

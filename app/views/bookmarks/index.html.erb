@@ -1,16 +1,6 @@
 <div class="container-fluid text-center">
   <div class="row">
-    <div class="col-4 d-flex flex-column mb-3 border-4">
-      <div class="text-start mx-auto">
-        <div class="p-3"><i class="bi bi-house"></i> <%= link_to "ホーム", root_path %></div>
-        <div class="p-3"><i class="bi bi-bell"></i> 通知</div>
-        <div class="p-3"><i class="bi bi-envelope"></i> メッセージ</div>
-        <div class="p-3"><i class="bi bi-bookmark"></i> ブックマーク</div>
-        <div class="p-3"><i class="bi bi-person-square"></i> <%= link_to "プロフィール", home_path(current_user), class:"decoration-none" %></div>
-        <div class="p-3">もっと見る</div>
-        <div class="p-3"><%= link_to "ツイートする", new_tweet_path, class:"btn btn-primary"  %></div>
-      </div>
-    </div>
+    <%= render partial: 'layouts/sidemenu' %>
     <div class="col-8 border-4">
       <div class="border-4 w-100 bg-primary">
         ブックマークしたツイートが表示される
