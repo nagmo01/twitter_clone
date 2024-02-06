@@ -4,7 +4,6 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    #@messages = Message.where(sender_id: current_user.id).or(Message.where(receiver_id: current_user.id)).select('DISTINCT ON (sender_id, receiver_id) *').order('sender_id, receiver_id, created_at')
     @my_messages = Message.my_messages(current_user)
   end
 
