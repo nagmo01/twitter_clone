@@ -3,7 +3,6 @@
 class HomeController < ApplicationController
   before_action :authenticate_user!
   def index
-    @user = User.find(current_user.id)
     @tweet = Tweet.new
     @tweets = Tweet.all.order(created_at: :desc).page(params[:page])
     @follower_tweets = follower_tweets.order(created_at: :desc).page(params[:page])
@@ -19,9 +18,8 @@ class HomeController < ApplicationController
   private
 
   def follower_tweets
-    user = User.find(current_user.id)
-    @relationship = user.following_relationship
-    @relationship = @relationship.map(&:followed_id)
-    Tweet.where(user_id: @relationship)
+    followed_ids = current_user.following_relationship
+    followed_ids = followed_ids.map(&:followed_id)
+    Tweet.where(user_id: followed_ids)
   end
 end
