@@ -1,0 +1,75 @@
+<div class="w-100 bg-primary">
+  通知が表示される
+</div>
+<% @notifications.each do |notification| %>
+  <% case notification.action_type %>
+  <% when "follow" then %>
+  <div class="border-under container">
+    <div class="row">
+      <div class="width-50 col-2 me-2 pb-2">
+        <p class="font-size-icon color-follow"><i class="bi bi-person-fill"></i></p>
+      </div>
+      <div class="text-start col-10 mt-2">
+        <%= image_tag notification.visitor.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar-notification width-40 height-40" if notification.visitor.avatar.attached? %>
+        <div class="font-size-15 m-1">
+          <%= notification.visitor.username %>さんにフォローされました。
+        </div>
+      </div>
+    </div>
+  </div>
+  <% when "favorite" then %>
+  <div class="border-under container">
+    <div class="row">
+      <div class="width-50 col-2 me-2 pb-2">
+        <p class="font-size-icon color-pink"><i class="bi bi-heart-fill"></i></p>
+      </div>
+      <div class="text-start col-10 mt-2">
+        <%= image_tag notification.visitor.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar-notification width-40 height-40" if notification.visitor.avatar.attached? %>
+        <div>
+          <div class="font-size-15 m-1"><%= notification.visitor.username %>さんがあなたのツイートをいいねしました。
+          </div>
+          <div class="font-size-13 m-1">
+            <%= notification.tweet.content %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% when "retweet" then %>
+  <div class="border-under container">
+    <div class="row">
+      <div class="width-50 col-2 me-2 pb-2">
+        <p class="font-size-icon color-retweet"><i class="bi bi-repeat"></i></p>
+      </div>
+      <div class="text-start col-10 mt-2">
+        <%= image_tag notification.visitor.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar-notification width-40 height-40" if notification.visitor.avatar.attached? %>
+        <div>
+          <div class="font-size-15 m-1"><%= notification.visitor.username %>さんがあなたのツイートをリツイートしました。
+          </div>
+          <div class="font-size-13 m-1">
+            <%= notification.tweet.content %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% when "reply" then %>
+  <div class="border-under container">
+    <div class="row">
+      <div class="width-50 col-2 me-2 pb-2">
+        <p class="font-size-icon color-follow"><i class="bi bi-chat-fill"></i></p>
+      </div>
+      <div class="text-start col-10 mt-2">
+        <%= image_tag notification.visitor.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar-notification width-40 height-40" if notification.visitor.avatar.attached? %>
+        <div>
+          <div class="font-size-15 m-1"><%= notification.visitor.username %>さんがあなたのツイートに返信しました。
+          </div>
+          <div class="font-size-13 m-1">
+            <%= notification.reply.content %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% end %>

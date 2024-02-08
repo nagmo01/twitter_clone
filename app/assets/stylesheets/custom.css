@@ -52,6 +52,12 @@
   height: 60px;
   object-fit:cover;
 }
+.avatar-notification {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  object-fit:cover;
+}
 
 .flamingo {
   background-color: #F1692C;
@@ -185,4 +191,34 @@
 
 .input-color {
   color: white; /* ここに希望の色を指定 */
+}
+.ml-50 {
+  padding-left: 50px;
+}
+.width-40 {
+  width: 40px;
+}
+.height-40 {
+  height: 40px;
+}
+
+.width-50 {
+  width: 50px;
+}
+.font-size-icon {
+  padding-top: 11px;
+  font-size: 25px;
+}
+.font-size-15 {
+  font-size: 15px;
+}
+.font-size-13 {
+  font-size: 13px;
+}
+
+.color-follow {
+  color: #007bff;
+}
+.color-retweet {
+  color: rgb(0, 186, 124);
 }

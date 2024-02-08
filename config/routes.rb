@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :retweets, only: :create
   resources :messages, only: %i[index show create]
   resources :relationships, only: %i[index create]
+  resources :notifications, only: %i[index]
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
