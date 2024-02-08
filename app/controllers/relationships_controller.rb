@@ -19,6 +19,7 @@ class RelationshipsController < ApplicationController
 
         @notification = current_user.active_notifications.build(visited_id: params[:id], action_type: 'follow')
         @notification.save!
+        NotificationMailer.notification_email(current_user, @notification).deliver
 
       end
 

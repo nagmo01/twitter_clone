@@ -15,6 +15,7 @@ class RetweetsController < ApplicationController
       @notification = current_user.active_notifications.build(visited_id: tweet.user.id, tweet_id: params[:id],
                                                               action_type: 'retweet')
       @notification.save!
+      NotificationMailer.notification_email(tweet.user, @notification).deliver unless current_user == tweet.user
 
     end
 
