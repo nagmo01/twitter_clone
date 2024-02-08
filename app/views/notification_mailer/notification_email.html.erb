@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @notification.visitor.username %>さんから<%= @action %>が届きました。</h1>
+    <% case @action %>
+    <% when "いいね" then %>
+      <p><%= @notification.tweet.content %></p>
+    <% when "フォロー" then %>
+      <p><%= @notification.visitor.username %>さんにフォローされました。</p>
+    <% when "リツイート" then %>
+      <p><%= @notification.tweet.content %></p>
+    <% when "リプライ" then %>
+      <p><%= @notification.reply.content %></p>
+    <% end %>
+
+    <p>
+      サイトに行って確認するには、<%= @url %>をクリックしてください。
+    </p>
+  </body>
+</html>
