@@ -4,7 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1><%= @notification.visitor.username %>さんから<%= @action %>が届きました。</h1>
+    <h1><%= @user.username %>さんから<%= @action %>が届きました。</h1>
     <% case @action %>
     <% when "いいね" then %>
       <p><%= @notification.tweet.content %></p>

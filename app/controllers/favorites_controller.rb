@@ -16,7 +16,7 @@ class FavoritesController < ApplicationController
                                                               action_type: 'favorite')
       @notification.save!
 
-      NotificationMailer.notification_email(tweet.user, @notification).deliver unless current_user == tweet.user
+      NotificationMailer.notification_email(current_user, @notification).deliver unless current_user == tweet.user
 
     end
     redirect_back(fallback_location: root_path)
