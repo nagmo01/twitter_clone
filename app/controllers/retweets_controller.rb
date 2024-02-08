@@ -10,6 +10,12 @@ class RetweetsController < ApplicationController
     else
       @retweet = current_user.retweets.build(tweet_id: params[:id])
       @retweet.save!
+
+      tweet = Tweet.find(params[:id])
+      @notification = current_user.active_notifications.build(visited_id: tweet.user.id, tweet_id: params[:id],
+                                                              action_type: 'retweet')
+      @notification.save!
+
     end
 
     redirect_back(fallback_location: root_path)

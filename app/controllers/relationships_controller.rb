@@ -16,6 +16,10 @@ class RelationshipsController < ApplicationController
       else
         @relationship = current_user.following_relationship.build(followed_id: params[:id])
         @relationship.save!
+
+        @notification = current_user.active_notifications.build(visited_id: params[:id], action_type: 'follow')
+        @notification.save!
+
       end
 
     end

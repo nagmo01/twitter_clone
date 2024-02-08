@@ -10,6 +10,12 @@ class FavoritesController < ApplicationController
     else
       @favorite = current_user.favorites.build(tweet_id: params[:id])
       @favorite.save!
+
+      tweet = Tweet.find(params[:id])
+      @notification = current_user.active_notifications.build(visited_id: tweet.user.id, tweet_id: params[:id],
+                                                              action_type: 'favorite')
+      @notification.save!
+
     end
     redirect_back(fallback_location: root_path)
   end
