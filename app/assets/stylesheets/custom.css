@@ -79,11 +79,9 @@
   text-decoration: none;
 }
 .color-white {
-  color: #000000;
+  color: white;
 }
-.color-white:hover {
-  color: #000000;
-}
+
 .color-blue {
   color: blue;
 }
@@ -182,4 +180,9 @@
   width: 400px;
   white-space: nowrap;
   overflow: hidden;
+}
+
+
+.input-color {
+  color: white; /* ここに希望の色を指定 */
 }
