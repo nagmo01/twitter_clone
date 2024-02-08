@@ -27,6 +27,10 @@ class User < ApplicationRecord
                                     inverse_of: 'following'
   has_many :followed_relationship, foreign_key: 'followed_id', class_name: 'Relationship', dependent: :destroy,
                                    inverse_of: 'followed'
+  has_many :active_notifications, foreign_key: 'visitor_id', class_name: 'Notification', dependent: :destroy,
+                                  inverse_of: 'visitor'
+  has_many :passive_notifications, foreign_key: 'visited_id', class_name: 'Notification', dependent: :destroy,
+                                   inverse_of: 'visited'
 
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first
