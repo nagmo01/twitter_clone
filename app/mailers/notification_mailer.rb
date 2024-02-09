@@ -3,8 +3,8 @@
 class NotificationMailer < ApplicationMailer
   default from: 'railsecsite@gmail.com'
 
-  def notification_email(user, notification)
-    @user = user
+  def notification_email(notification)
+    @user = notification.visited
     @notification = notification
     case notification.action_type
     when 'favorite'
@@ -16,9 +16,8 @@ class NotificationMailer < ApplicationMailer
     when 'reply'
       @action = 'リプライ'
     end
-    @url = 'http://localhost:3000'
-    @url = 'https://hc-twitter-14d8e9cfa8c4.herokuapp.com' if Rails.env.production?
+    @url = ENV['SITE_URL']
 
-    mail(to: user.email, subject: "新しい#{@action}が届きました。")
+    mail(to: @user.email, subject: "新しい#{@action}が届きました。")
   end
 end
