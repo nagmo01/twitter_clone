@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :messages, only: %i[index show create]
   resources :relationships, only: %i[index create]
   resources :notifications, only: %i[index]
+  resources :replies, only: %i[index create]
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
