@@ -6,6 +6,7 @@ class RepliesController < ApplicationController
   def create
     @reply = current_user.replies.build(tweet_id: params[:id], content: params[:content])
 
+
     begin
       ActiveRecord::Base.transaction do
         if @reply.save
@@ -21,6 +22,7 @@ class RepliesController < ApplicationController
       end
     rescue StandardError
       redirect_to replies_path(params[:id]), alert: '返信に失敗しました。'
+
     end
   end
 
