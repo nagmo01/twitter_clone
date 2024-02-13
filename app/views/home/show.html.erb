@@ -1,15 +1,6 @@
 <div class="container-fluid text-center">
   <div class="row">
-    <div class="col-4 d-flex flex-column mb-3 border-4">
-      <div class="p-3"><%= link_to "ホーム", root_path, class:"decoration-none" %></div>
-      <div class="p-3">話題を検索</div>
-      <div class="p-3">メッセージ</div>
-      <div class="p-3">ブックマーク</div>
-      <div class="p-3">Twitter Blue</div>
-      <div class="p-3"><%= link_to "プロフィール", home_path(current_user), class:"decoration-none" %></div>
-      <div class="p-3">もっと見る</div>
-      <div class="p-3"><%= link_to "ツイートする", new_tweet_path, class:"btn btn-primary"  %></div>
-    </div>
+    <%= render partial: 'layouts/sidemenu' %>
     <div class="col-8 border-4">
       <div class="mb-3">
         <div class="w-100 mb-4"><%= image_tag @user.header_image.variant(resize_to_fit: [1500, 300]), class:"w-100" if @user.header_image.attached? %></div>
@@ -24,12 +15,9 @@
         <div class="text-start mb-1">誕生日: <%= @user.birthday %></div>
         <div class="text-start">URL: <%= link_to "#{@user.website}", @user.website  %></div>
       </div>
-      <div class="tab01">
-        <input id="menu01" type="radio" name="tab_menu" checked><label class="tab_menu" for="menu01">ツイート</label>
-        <input id="menu02" type="radio" name="tab_menu"><label class="tab_menu" for="menu02">いいね</label>
-        <input id="menu03" type="radio" name="tab_menu"><label class="tab_menu" for="menu03">リツイート</label>
-        <input id="menu04" type="radio" name="tab_menu"><label class="tab_menu" for="menu04">コメント</label>
-        <div class="tab_contents border-4 p-1 w-100" id="menu01">
+      <div class="tab-wrap">
+        <input id="TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-01">ツイート</label>
+        <div class="tab-content">
           <div class="border-4 w-100 bg-primary">
             自身のツイートが表示される
           </div>
@@ -67,13 +55,170 @@
                   <% end %>
                 </div>
               <% end %>
+              <div class="d-flex">
+                <div>返信</div>
+                <% unless tweet.retweets.find_by(user_id: current_user.id) %>
+                  <%= link_to retweets_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
+                    <i class="bi bi-repeat"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to retweets_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
+                    <i class="bi bi-repeat-1"></i>
+                  <% end %>
+                <% end %>
+                <div>RT</div>
+                <div class="ps-1"><%= tweet.retweets.size %></div>
+                <% unless tweet.favorites.where(user_id: current_user.id).first %>
+                  <%= link_to favorites_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
+                    <i class="bi bi-heart"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to favorites_path(params: { id: tweet.id }), data: { turbo_method: :post } do %>
+                    <i class="bi bi-heart-fill color-pink"></i>
+                  <% end %>
+                <% end %>
+                <div class="ps-1"><%= tweet.favorites.size %></div>
+              </div>
             </div>
           </div>
         <% end %>
         <%= paginate @tweets, theme: 'bootstrap-5' %>
       </div>
-      <div class="tab_contents border-4 p-1 w-100" id="menu02">
-      </div>
+      <input id="TAB-02" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-02">いいね</label>
+      <div class="tab-content">
+        <div class="border-4 w-100 bg-primary">
+          いいねしたツイート一覧が表示される
+        </div>
+        <% @favorites.each do |favorite| %>
+          <div class="d-flex border-under">
+            <%= image_tag favorite.tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar d-flex col-2 margin-right-1" if favorite.tweet.user.avatar.attached? %>
+            <div>
+              <%= link_to "/tweet/#{favorite.tweet.id}", class:"decoration-none color-white" do %>
+                <div class="d-flex flex-column">
+                  <div class="fw-bolder fs-6 text-start"><%= favorite.tweet.user.username %></div>
+                  <div class="text-start font-size-text"><%= favorite.tweet.content %></div>
+                </div>
+                <div class="d-flex">
+                  <% if favorite.tweet.images.attached? %>
+                    <% case favorite.tweet.images.size %>
+                    <% when 1 then %>
+                    <% favorite.tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                    <% end %>
+                    <% when 2 then %>
+                    <% favorite.tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                    <% end %>
+                    <% when 3 then %>
+                    <div class="mx-auto">
+                      <% favorite.tweet.images.each do |image| %>
+                        <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                      <% end %>
+                    </div>
+                    <% when 4 then %>
+                    <% favorite.tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="d-flex">
+              <div>返信</div>
+              <% unless favorite.tweet.retweets.find_by(user_id: current_user.id) %>
+                <%= link_to retweets_path(params: { id: favorite.tweet.id }), data: { turbo_method: :post } do %>
+                  <i class="bi bi-repeat"></i>
+                <% end %>
+              <% else %>
+                <%= link_to retweets_path(params: { id: favorite.tweet.id }), data: { turbo_method: :post } do %>
+                  <i class="bi bi-repeat-1"></i>
+                <% end %>
+              <% end %>
+              <div>RT</div>
+              <div class="ps-1"><%= favorite.tweet.retweets.size %></div>
+              <% unless favorite.tweet.favorites.where(user_id: current_user.id).first %>
+                <%= link_to favorites_path(params: { id: favorite.tweet_id}), data: { turbo_method: :post } do %>
+                  <i class="bi bi-heart"></i>
+                <% end %>
+              <% else %>
+                <%= link_to favorites_path(params: { id: favorite.tweet_id}), data: { turbo_method: :post } do %>
+                  <i class="bi bi-heart-fill color-pink"></i>
+                <% end %>
+              <% end %>
+              <div class="ps-1"><%= favorite.tweet.favorites.size %></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
+    <input id="TAB-03" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-03">リツイート</label>
+    <div class="tab-content">
+      <div class="border-4 w-100 bg-primary">
+        リツイートした投稿が表示される
+      </div>
+      <% @retweets.each do |retweet| %>
+        <div class="d-flex border-under">
+          <%= image_tag retweet.tweet.user.avatar.variant(resize_to_fit: [1000, 1000]), class:"avatar d-flex col-2 margin-right-1" if retweet.tweet.user.avatar.attached? %>
+          <div>
+            <%= link_to "/tweet/#{retweet.tweet.id}", class:"decoration-none color-white" do %>
+              <div class="d-flex flex-column">
+                <div class="fw-bolder fs-6 text-start"><%= retweet.tweet.user.username %></div>
+                <div class="text-start font-size-text"><%= retweet.tweet.content %></div>
+              </div>
+              <div class="d-flex">
+                <% if retweet.tweet.images.attached? %>
+                  <% case retweet.tweet.images.size %>
+                  <% when 1 then %>
+                  <% retweet.tweet.images.each do |image| %>
+                    <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-100" %>
+                  <% end %>
+                  <% when 2 then %>
+                  <% retweet.tweet.images.each do |image| %>
+                    <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-50" %>
+                  <% end %>
+                  <% when 3 then %>
+                  <div class="mx-auto">
+                    <% retweet.tweet.images.each do |image| %>
+                      <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                    <% end %>
+                  </div>
+                  <% when 4 then %>
+                  <% retweet.tweet.images.each do |image| %>
+                    <%= image_tag image.variant(resize_to_limit: [1000, 1000]), class:"w-25" %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="d-flex">
+            <div>返信</div>
+            <% unless retweet.tweet.retweets.find_by(user_id: current_user.id) %>
+              <%= link_to retweets_path(params: { id: retweet.tweet.id }), data: { turbo_method: :post } do %>
+                <i class="bi bi-repeat"></i>
+              <% end %>
+            <% else %>
+              <%= link_to retweets_path(params: { id: retweet.tweet.id }), data: { turbo_method: :post } do %>
+                <i class="bi bi-repeat-1"></i>
+              <% end %>
+            <% end %>
+            <div>RT</div>
+            <div class="ps-1"><%= retweet.tweet.retweets.size %></div>
+            <% unless retweet.tweet.favorites.where(user_id: current_user.id).first %>
+              <%= link_to favorites_path(params: { id: retweet.tweet.id }), data: { turbo_method: :post } do %>
+                <i class="bi bi-heart"></i>
+              <% end %>
+            <% else %>
+              <%= link_to favorites_path(params: { id: retweet.tweet.id }), data: { turbo_method: :post } do %>
+                <i class="bi bi-heart-fill color-pink"></i>
+              <% end %>
+            <% end %>
+            <div class="ps-1"><%= retweet.tweet.favorites.size %></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
+</div>
+</div>
+</div>
 </div>

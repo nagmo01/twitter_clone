@@ -17,6 +17,20 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :tweets, dependent: :destroy
   has_many :replies, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
+  has_many :retweets, dependent: :destroy
+  has_many :sent_messages, foreign_key: 'sender_id', class_name: 'Message', inverse_of: 'sender', dependent: :destroy
+  has_many :received_messages, foreign_key: 'receiver_id', class_name: 'Message', inverse_of: 'receiver',
+                               dependent: :destroy
+  has_many :following_relationship, foreign_key: 'following_id', class_name: 'Relationship', dependent: :destroy,
+                                    inverse_of: 'following'
+  has_many :followed_relationship, foreign_key: 'followed_id', class_name: 'Relationship', dependent: :destroy,
+                                   inverse_of: 'followed'
+  has_many :active_notifications, foreign_key: 'visitor_id', class_name: 'Notification', dependent: :destroy,
+                                  inverse_of: 'visitor'
+  has_many :passive_notifications, foreign_key: 'visited_id', class_name: 'Notification', dependent: :destroy,
+                                   inverse_of: 'visited'
 
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first
