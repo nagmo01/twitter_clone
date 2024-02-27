@@ -8,12 +8,12 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
-  <body class="border-6 mh-1000 bg-black text-white">
+  <body class="mh-1000 bg-black">
     <div>
       <%= render 'layouts/flashes' %>
     </div>
-    <div class="d-flex justify-content-around mx-auto p-2 border-4">
-      <div><i class="bi bi-twitter"></i> 偽Twitter</div>
+    <div class="d-flex justify-content-around mx-auto p-2">
+      <div class="white"><i class="bi bi-twitter"></i>Twitter</div>
       <div>
         <% if user_signed_in? %>
           <%= link_to "home", root_path, class:"btn btn-dark" %>
@@ -24,7 +24,7 @@
         <% end %>
       </div>
     </div>
-    <div class="border-4">
+    <div>
       <%= yield %>
     </div>
   </body>

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   # post '/favorite/:id' => 'favorites#create'
 
   resources :home, only: %i[index show]
-  resources :tweets, only: %i[create new destroy show]
+  resources :tweets, only: %i[new create destroy show]
   resources :favorites, only: :create
   resources :bookmarks, only: %i[index create]
   resources :retweets, only: :create
