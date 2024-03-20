@@ -27,5 +27,4 @@ class TweetsController < ApplicationController
   end
 
   def destroy; end
-
 end
