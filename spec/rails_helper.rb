@@ -23,6 +23,7 @@ require 'rspec/rails'
 # require only the support files necessary.
 #
 # Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -32,6 +33,35 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
+  config.before(:each, type: :system) do |example|
+    if example.metadata[:use_js]
+      options = {}
+      if ENV.key?('SELENIUM_DRIVER_URL')
+        Capybara.server_host = ENV['CAPYBARA_SERVER_HOST']
+        Capybara.app_host = ENV['CAPYBARA_APP_HOST']
+
+        Capybara.register_driver :remote_chrome do |app|
+          url = ENV['SELENIUM_DRIVER_URL']
+
+          options = Selenium::WebDriver::Chrome::Options.new
+          options.add_argument('no-sandbox')
+          options.add_argument('headless')
+          options.add_argument('disable-gpu')
+          options.add_argument('window-size=1280,800')
+
+          Capybara::Selenium::Driver.new(app, browser: :remote, url:, capabilities: options)
+        end
+
+        driven_by :remote_chrome
+      else
+        driven_by :selenium, using: :headless_chrome, screen_size: [1280, 800] do |opt|
+          opt.add_argument('--headless --disable-gpu --no-sandbox --lang=ja-JP')
+        end
+      end
+    else
+      driven_by :rack_test
+    end
+  end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures')
 
@@ -62,4 +92,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end
